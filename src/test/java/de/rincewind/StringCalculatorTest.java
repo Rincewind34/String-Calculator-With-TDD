@@ -29,4 +29,9 @@ public class StringCalculatorTest {
 		assertEquals(3, this.calculator.add("1,2"));
 	}
 
+	@Test
+	public void add_fourNumbers() throws Exception {
+		assertEquals(3, this.calculator.add("1,2,5,10"));
+	}
+
 }
