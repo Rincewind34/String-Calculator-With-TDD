@@ -52,10 +52,20 @@ public class StringCalculator {
 			String[] numbersArray = this.input.split(this.separationRegex);
 
 			for (String number : numbersArray) {
-				sum += Integer.parseInt(number);
+				sum = sum + parseNumber(number);
 			}
 
 			return sum;
+		}
+
+		private static int parseNumber(String number) {
+			int n = Integer.parseInt(number);
+
+			if (n >= 0) {
+				return n;
+			} else {
+				throw new NoNegatives();
+			}
 		}
 
 		private void setSeparationPattern(String separationPattern) {
@@ -63,5 +73,10 @@ public class StringCalculator {
 		}
 
 	}
-	
+
+	@SuppressWarnings("serial")
+	public static class NoNegatives extends RuntimeException {
+
+	}
+
 }

@@ -51,7 +51,16 @@ public class StringCalculatorTest {
 
 	@Test(expected = StringCalculator.NoNegatives.class)
 	public void add_noNegativesAllowed() throws Exception {
-		assertEquals(3, this.calculator.add("-2"));
+		this.calculator.add("-2");
+	}
+
+	@Test()
+	public void add_noNegativesAllowedMessage() throws Exception {
+		try {
+			this.calculator.add("-2");
+		} catch (StringCalculator.NoNegatives exception) {
+			assertEquals("no negatives allowed: -2", exception.getMessage());
+		}
 	}
 
 }
