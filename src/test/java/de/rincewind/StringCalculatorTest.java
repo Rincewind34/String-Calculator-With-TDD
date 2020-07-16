@@ -23,4 +23,9 @@ public class StringCalculatorTest {
 		Assert.assertEquals(1, this.calculator.add("1"));
 	}
 
+	@Test
+	public void add_twoNumbers() throws Exception {
+		Assert.assertEquals(3, this.calculator.add("1,2"));
+	}
+
 }
