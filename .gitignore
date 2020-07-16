@@ -1,0 +1,40 @@
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+### Intellij ###
+*.iml
+out/
+.idea/
+*.ipr
+*.iws
+
+### Eclipse ###
+.metadata/
+.settings/
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+.loadpath
+.project
+.classpath
+local.properties
+
+### Maven ###
+target/
+etc/
+dependency-reduced-pom.xml
+pom.xml.releaseBackup
+release.properties
+
+### Others ###
+*~
+*.DS_Store
