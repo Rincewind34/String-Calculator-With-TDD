@@ -49,4 +49,9 @@ public class StringCalculatorTest {
 		assertEquals(3, this.calculator.add("//;\n1;2"));
 	}
 
+	@Test(expected = StringCalculator.NoNegatives.class)
+	public void add_noNegativesAllowed() throws Exception {
+		assertEquals(3, this.calculator.add("-2"));
+	}
+
 }
