@@ -9,4 +9,9 @@ public class StringCalculatorTest {
 		new StringCalculator();
 	}
 	
+	@Test
+	public void add_emptyString() throws Exception {
+		new StringCalculator().add("");
+	}
+	
 }
