@@ -31,7 +31,7 @@ public class StringCalculatorTest {
 
 	@Test
 	public void add_fourNumbers() throws Exception {
-		assertEquals(3, this.calculator.add("1,2,5,10"));
+		assertEquals(18, this.calculator.add("1,2,5,10"));
 	}
 
 }

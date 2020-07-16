@@ -16,13 +16,14 @@ public class StringCalculator {
 	}
 
 	private static int sumNumbers(String numbers) {
+		int sum = 0;
 		String[] numbersArray = numbers.split(StringCalculator.QUOTED_SEPARATOR);
-
-		if (numbersArray.length == 1) {
-			return Integer.parseInt(numbersArray[0]);
-		} else {
-			return Integer.parseInt(numbersArray[0]) + Integer.parseInt(numbersArray[1]);
+		
+		for (int i = 0; i < numbersArray.length; i++) {
+			sum += Integer.parseInt(numbersArray[i]);
 		}
+		
+		return sum;
 	}
 
 }
