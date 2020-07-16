@@ -1,6 +1,7 @@
 package de.rincewind;
 
-import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,17 +16,17 @@ public class StringCalculatorTest {
 
 	@Test
 	public void add_emptyString() throws Exception {
-		Assert.assertEquals(0, this.calculator.add(""));
+		assertEquals(0, this.calculator.add(""));
 	}
 
 	@Test
 	public void add_oneDigit() throws Exception {
-		Assert.assertEquals(1, this.calculator.add("1"));
+		assertEquals(1, this.calculator.add("1"));
 	}
 
 	@Test
 	public void add_twoNumbers() throws Exception {
-		Assert.assertEquals(3, this.calculator.add("1,2"));
+		assertEquals(3, this.calculator.add("1,2"));
 	}
 
 }
