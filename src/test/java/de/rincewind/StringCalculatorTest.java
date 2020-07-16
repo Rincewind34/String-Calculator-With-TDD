@@ -46,7 +46,7 @@ public class StringCalculatorTest {
 
 	@Test
 	public void add_customSeparator() throws Exception {
-		assertEquals(21, this.calculator.add("//;\n1;2"));
+		assertEquals(3, this.calculator.add("//;\n1;2"));
 	}
 
 }
