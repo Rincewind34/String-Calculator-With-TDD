@@ -64,7 +64,7 @@ public class StringCalculator {
 			if (n >= 0) {
 				return n;
 			} else {
-				throw new NoNegatives();
+				throw new NoNegatives(n);
 			}
 		}
 
@@ -77,6 +77,10 @@ public class StringCalculator {
 	@SuppressWarnings("serial")
 	public static class NoNegatives extends RuntimeException {
 
+		public NoNegatives(int number) {
+			super("no negatives allowed: " + number);
+		}
+		
 	}
 
 }
