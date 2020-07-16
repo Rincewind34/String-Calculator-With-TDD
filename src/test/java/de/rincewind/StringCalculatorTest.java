@@ -44,4 +44,9 @@ public class StringCalculatorTest {
 		assertEquals(21, this.calculator.add("4\n3,6\n8"));
 	}
 
+	@Test
+	public void add_customSeparator() throws Exception {
+		assertEquals(21, this.calculator.add("//;\n1;2"));
+	}
+
 }
