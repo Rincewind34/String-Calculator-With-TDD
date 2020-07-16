@@ -34,4 +34,9 @@ public class StringCalculatorTest {
 		assertEquals(18, this.calculator.add("1,2,5,10"));
 	}
 
+	@Test
+	public void add_newLineAsSeparator() throws Exception {
+		assertEquals(7, this.calculator.add("4\n3"));
+	}
+
 }
