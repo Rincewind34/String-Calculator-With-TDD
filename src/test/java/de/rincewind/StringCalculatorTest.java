@@ -65,4 +65,13 @@ public class StringCalculatorTest {
 		}
 	}
 
+	@Test
+	public void add_multipleNegativesMessage() throws Exception {
+		try {
+			this.calculator.add("-4,5,-7");
+		} catch (StringCalculator.NoNegatives exception) {
+			assertEquals("no negatives allowed: -4,-7", exception.getMessage());
+		}
+	}
+
 }
