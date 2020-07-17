@@ -101,7 +101,7 @@ public class StringCalculatorTest {
 		assertCalculatorAdd("//;;\n6;;7", 13);
 	}
 	
-	@Test(expected = StringCalculator.EmptySeparatorBrackets.class)
+	@Test(expected = StringCalculator.InvalidSingleCharSeparator.class)
 	public void add_customSeparatorNoChar() throws Exception {
 		assertCalculatorAdd("//\n6\n7", 13);
 	}
@@ -121,7 +121,7 @@ public class StringCalculatorTest {
 		assertCalculatorAdd("//]\n6]7", 13);
 	}
 	
-	@Test(expected = StringCalculator.InvalidSingleCharSeparator.class)
+	@Test(expected = StringCalculator.EmptySeparatorBrackets.class)
 	public void add_customSeparatorEmptyBrackets() throws Exception {
 		assertCalculatorAdd("//[]\n6\n7", 13);
 	}
@@ -137,8 +137,18 @@ public class StringCalculatorTest {
 	}
 	
 	@Test(expected = StringCalculator.EmptySeparatorBrackets.class)
-	public void add_customSeparatorAnyEmptyBracketss() throws Exception {
+	public void add_customSeparatorEmptyBracketsAtEnd() throws Exception {
 		assertCalculatorAdd("//[;][]\n4;2;6;4", 16);
+	}
+	
+	@Test(expected = StringCalculator.EmptySeparatorBrackets.class)
+	public void add_customSeparatorMultipleEmptyBracketsAtEnd() throws Exception {
+		assertCalculatorAdd("//[;][][]\n4;2;6;4", 16);
+	}
+	
+	@Test(expected = StringCalculator.EmptySeparatorBrackets.class)
+	public void add_customSeparatorEmptyBracketsInMid() throws Exception {
+		assertCalculatorAdd("//[;][][%]\n4;2%6;4", 16);
 	}
 
 	@Test(expected = StringCalculator.NoNegatives.class)

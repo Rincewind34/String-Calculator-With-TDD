@@ -105,10 +105,13 @@ public class StringCalculator {
 
 		private void parseBracketedSeparator(String separationPattern) {
 			separationPattern = Invoker.stripFirstAndLastSeparatorBrackets(separationPattern);
-			String[] separators = separationPattern.split(Pattern.quote("]["));
 
-			if (separators[0].isEmpty()) {
-				throw new InvalidSingleCharSeparator();
+			// The default limit in String#split is zero; as a special setting that would remove trailing empty entries
+			final int SPLIT_AS_OFTEN_AS_POSSIBLE = -1;
+			String[] separators = separationPattern.split(Pattern.quote("]["), SPLIT_AS_OFTEN_AS_POSSIBLE);
+
+			if (Arrays.stream(separators).anyMatch(String::isEmpty)) {
+				throw new EmptySeparatorBrackets();
 			}
 
 			this.setSeparationString(separators);
@@ -137,6 +140,12 @@ public class StringCalculator {
 	public static class InvalidSingleCharSeparator extends RuntimeException {
 
 		private static final long serialVersionUID = -8142676040236064515L;
+
+	}
+
+	public static class EmptySeparatorBrackets extends RuntimeException {
+
+		private static final long serialVersionUID = -7320138582938197618L;
 
 	}
 
