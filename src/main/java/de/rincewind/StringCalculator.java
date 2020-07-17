@@ -30,7 +30,7 @@ public class StringCalculator {
 
 		public Invoker(String input) {
 			this.input = input;
-			this.setSeparationPattern(StringCalculator.DEFAULT_SEPARATOR);
+			this.setSeparationString(StringCalculator.DEFAULT_SEPARATOR);
 		}
 
 		public int calculate() {
@@ -45,7 +45,7 @@ public class StringCalculator {
 
 		private void readAndStripSeparator() {
 			if (this.input.startsWith(StringCalculator.CUSTOM_SEPARATOR_INDICATION)) {
-				this.setSeparationPattern(this.readCustomSeparator());
+				this.parseSeparationPattern(this.readCustomSeparator());
 				this.stripCustomSeparatorSection();
 			}
 		}
@@ -94,21 +94,31 @@ public class StringCalculator {
 			return Arrays.stream(numbers).filter(n -> n <= Invoker.MAXIMAL_NUMBER_COUNTED).sum();
 		}
 
-		private void setSeparationPattern(String separationPattern) {
-			if (!separationPattern.startsWith("[") && separationPattern.length() != 1) {
+		private void parseSeparationPattern(String separationPattern) {
+			if (separationPattern.length() == 1) {
+				this.setSeparationString(separationPattern);
+			} else if (!separationPattern.startsWith("[")) {
 				throw new InvalidSingleCharSeparator();
+			} else {
+				parseBracketedSeparator(separationPattern);
 			}
-			
-			separationPattern = stripSeparatorBraces(separationPattern);
-			
+		}
+
+		private void parseBracketedSeparator(String separationPattern) {
+			separationPattern = Invoker.stripSeparatorBrackets(separationPattern);
+
 			if (separationPattern.isEmpty()) {
 				throw new InvalidSingleCharSeparator();
 			}
-			
+
+			this.setSeparationString(separationPattern);
+		}
+
+		private void setSeparationString(String separationPattern) {
 			this.separationRegex = Pattern.quote(separationPattern) + "|\n";
 		}
 
-		private static String stripSeparatorBraces(String separationPattern) {
+		private static String stripSeparatorBrackets(String separationPattern) {
 			if (separationPattern.startsWith("[")) {
 				separationPattern = separationPattern.substring(1, separationPattern.length() - 1);
 			}
@@ -130,7 +140,7 @@ public class StringCalculator {
 	public static class InvalidSingleCharSeparator extends RuntimeException {
 
 		private static final long serialVersionUID = -8142676040236064515L;
-		
+
 	}
 
 }

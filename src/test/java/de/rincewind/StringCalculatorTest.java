@@ -107,17 +107,22 @@ public class StringCalculatorTest {
 	}
 	
 	@Test
-	public void add_customSeparatorWithOptionalBraces() throws Exception {
+	public void add_customSeparatorWithOptionalBrackets() throws Exception {
 		assertCalculatorAdd("//[;]\n6;7", 13);
 	}
 	
 	@Test
-	public void add_customSeparatorOpeningBraces() throws Exception {
+	public void add_customSeparatorOpeningBrackets() throws Exception {
 		assertCalculatorAdd("//[\n6[7", 13);
 	}
 	
+	@Test
+	public void add_customSeparatorClosingBrackets() throws Exception {
+		assertCalculatorAdd("//]\n6]7", 13);
+	}
+	
 	@Test(expected = StringCalculator.InvalidSingleCharSeparator.class)
-	public void add_customSeparatorEmptyBraces() throws Exception {
+	public void add_customSeparatorEmptyBrackets() throws Exception {
 		assertCalculatorAdd("//[]\n6\n7", 13);
 	}
 	
