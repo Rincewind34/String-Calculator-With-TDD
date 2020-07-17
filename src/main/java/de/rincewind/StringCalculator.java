@@ -11,6 +11,10 @@ public class StringCalculator {
 	public int add(String input) {
 		return new Invoker(input).calculate();
 	}
+	
+	public int getCalledCount() {
+		return 0;
+	}
 
 	private static class Invoker {
 

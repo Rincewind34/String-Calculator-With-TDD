@@ -33,6 +33,13 @@ public class StringCalculatorTest {
 	}
 
 	@Test
+	public void getCalledCount_OneCall() throws Exception {
+		this.calculator.add("");
+		
+		Assert.assertEquals(1, this.calculator.getCalledCount());
+	}
+
+	@Test
 	public void add_emptyString() throws Exception {
 		assertCalculatorAdd("", 0);
 	}
