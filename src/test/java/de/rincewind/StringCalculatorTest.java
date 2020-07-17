@@ -14,7 +14,7 @@ public class StringCalculatorTest {
 	public void setup() {
 		this.calculator = new StringCalculator();
 	}
-	
+
 	private void assertCalculatorAdd(String input, int expected) {
 		assertEquals(expected, this.calculator.add(input));
 	}
@@ -35,7 +35,16 @@ public class StringCalculatorTest {
 	@Test
 	public void getCalledCount_OneCall() throws Exception {
 		this.calculator.add("");
-		
+
+		Assert.assertEquals(1, this.calculator.getCalledCount());
+	}
+
+	@Test
+	public void getCalledCount_CalledWithNegatives() throws Exception {
+		try {
+			this.calculator.add("-1");
+		} catch (StringCalculator.NoNegatives exception) {}
+
 		Assert.assertEquals(1, this.calculator.getCalledCount());
 	}
 

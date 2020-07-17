@@ -8,12 +8,15 @@ public class StringCalculator {
 	public static final String DEFAULT_SEPARATOR = ",";
 	public static final String CUSTOM_SEPARATOR_INDICATION = "//";
 
+	private int timesCalled;
+	
 	public int add(String input) {
+		this.timesCalled++;
 		return new Invoker(input).calculate();
 	}
 	
 	public int getCalledCount() {
-		return 0;
+		return this.timesCalled;
 	}
 
 	private static class Invoker {
