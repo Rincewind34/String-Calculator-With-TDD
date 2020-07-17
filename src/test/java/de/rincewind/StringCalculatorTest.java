@@ -98,4 +98,9 @@ public class StringCalculatorTest {
 		assertNoNegativesMessage("-4,5,-7", "-4,-7");
 	}
 
+	@Test
+	public void add_ignoreOver1000() throws Exception {
+		assertCalculatorAdd("1000", 0);
+	}
+
 }
