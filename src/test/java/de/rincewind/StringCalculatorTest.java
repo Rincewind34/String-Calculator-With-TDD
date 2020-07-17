@@ -2,6 +2,7 @@ package de.rincewind;
 
 import static org.junit.Assert.assertEquals;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,10 +28,14 @@ public class StringCalculatorTest {
 	}
 
 	@Test
+	public void getCalledCount_NoCalls() throws Exception {
+		Assert.assertEquals(0, this.calculator.getCalledCount());
+	}
+
+	@Test
 	public void add_emptyString() throws Exception {
 		assertCalculatorAdd("", 0);
 	}
-
 
 	@Test
 	public void add_oneDigit() throws Exception {
