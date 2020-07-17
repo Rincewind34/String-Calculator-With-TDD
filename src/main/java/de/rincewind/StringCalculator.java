@@ -95,10 +95,24 @@ public class StringCalculator {
 		}
 
 		private void setSeparationPattern(String separationPattern) {
-			if (separationPattern.length() > 1) {
-				throw new MultipleCharSeparator();
+			if (!separationPattern.startsWith("[") && separationPattern.length() != 1) {
+				throw new InvalidSingleCharSeparator();
 			}
+			
+			separationPattern = stripSeparatorBraces(separationPattern);
+			
+			if (separationPattern.isEmpty()) {
+				throw new InvalidSingleCharSeparator();
+			}
+			
 			this.separationRegex = Pattern.quote(separationPattern) + "|\n";
+		}
+
+		private static String stripSeparatorBraces(String separationPattern) {
+			if (separationPattern.startsWith("[")) {
+				separationPattern = separationPattern.substring(1, separationPattern.length() - 1);
+			}
+			return separationPattern;
 		}
 
 	}
@@ -113,7 +127,7 @@ public class StringCalculator {
 
 	}
 
-	public static class MultipleCharSeparator extends RuntimeException {
+	public static class InvalidSingleCharSeparator extends RuntimeException {
 
 		private static final long serialVersionUID = -8142676040236064515L;
 		
