@@ -94,13 +94,17 @@ public class StringCalculator {
 		}
 
 		private void parseSeparationPattern(String separationPattern) {
-			if (separationPattern.length() == 1) {
+			if (Invoker.isPatternSingleCharShortcut(separationPattern)) {
 				this.setSeparationString(separationPattern);
 			} else if (!separationPattern.startsWith("[")) {
 				throw new InvalidSingleCharSeparator();
 			} else {
 				this.parseBracketedSeparator(separationPattern);
 			}
+		}
+
+		private static boolean isPatternSingleCharShortcut(String separationPattern) {
+			return separationPattern.length() == 1;
 		}
 
 		private void parseBracketedSeparator(String separationPattern) {
@@ -110,11 +114,15 @@ public class StringCalculator {
 			final int SPLIT_AS_OFTEN_AS_POSSIBLE = -1;
 			String[] separators = separationPattern.split(Pattern.quote("]["), SPLIT_AS_OFTEN_AS_POSSIBLE);
 
-			if (Arrays.stream(separators).anyMatch(String::isEmpty)) {
+			if (Invoker.isAnySeparatorEmpty(separators)) {
 				throw new EmptySeparatorBrackets();
 			}
 
 			this.setSeparationString(separators);
+		}
+
+		private static boolean isAnySeparatorEmpty(String[] separators) {
+			return Arrays.stream(separators).anyMatch(String::isEmpty);
 		}
 
 		private void setSeparationString(String... separationPattern) {
