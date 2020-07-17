@@ -150,6 +150,11 @@ public class StringCalculatorTest {
 	public void add_customSeparatorEmptyBracketsInMid() throws Exception {
 		assertCalculatorAdd("//[;][][%]\n4;2%6;4", 16);
 	}
+	
+	@Test
+	public void add_customSeparatorMultipleSeparatorsMultipleChars() throws Exception {
+		assertCalculatorAdd("//[**][;;][%]\n4**2%6;;4", 16);
+	}
 
 	@Test(expected = StringCalculator.NoNegatives.class)
 	public void add_noNegativesAllowed() throws Exception {
