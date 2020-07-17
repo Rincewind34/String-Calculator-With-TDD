@@ -95,6 +95,9 @@ public class StringCalculator {
 		}
 
 		private void setSeparationPattern(String separationPattern) {
+			if (separationPattern.length() > 1) {
+				throw new MultipleCharSeparator();
+			}
 			this.separationRegex = Pattern.quote(separationPattern) + "|\n";
 		}
 
@@ -108,6 +111,12 @@ public class StringCalculator {
 			super("no negatives allowed: " + numbers);
 		}
 
+	}
+
+	public static class MultipleCharSeparator extends RuntimeException {
+
+		private static final long serialVersionUID = -8142676040236064515L;
+		
 	}
 
 }

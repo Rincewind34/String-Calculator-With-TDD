@@ -101,7 +101,12 @@ public class StringCalculatorTest {
 	public void add_customSeparatorInvalidMultipleChars() throws Exception {
 		assertCalculatorAdd("//;;\n6;;7", 13);
 	}
-
+	
+	@Test(expected = StringCalculator.MultipleCharSeparator.class)
+	public void add_customSeparatorNoChar() throws Exception {
+		assertCalculatorAdd("//\n6\n7", 13);
+	}
+	
 	@Test
 	@Ignore
 	public void add_customSeparatorMultipleChars() throws Exception {
