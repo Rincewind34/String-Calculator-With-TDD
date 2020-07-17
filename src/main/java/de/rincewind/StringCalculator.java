@@ -1,5 +1,8 @@
 package de.rincewind;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public class StringCalculator {
 
 	public static final String DEFAULT_SEPARATOR = ",";
@@ -32,40 +35,53 @@ public class StringCalculator {
 
 		private void readAndStripSeparator() {
 			if (this.input.startsWith(StringCalculator.CUSTOM_SEPARATOR_INDICATION)) {
-				this.readCustomSeparator();
+				this.setSeparationPattern(this.readCustomSeparator());
 				this.stripCustomSeparatorSection();
 			}
 		}
 
-		private void readCustomSeparator() {
-			String separatorSection = this.input.substring(0, this.input.indexOf('\n'));
+		private String readCustomSeparator() {
+			String separatorSection = this.input.substring(0, this.findEndOfSeparatorSection());
 			String separator = separatorSection.substring(StringCalculator.CUSTOM_SEPARATOR_INDICATION.length());
-			this.setSeparationPattern(separator);
+			return separator;
 		}
 
 		private void stripCustomSeparatorSection() {
-			this.input = this.input.substring(this.input.indexOf('\n') + 1);
+			this.input = this.input.substring(this.findEndOfSeparatorSection() + 1);
+		}
+
+		private int findEndOfSeparatorSection() {
+			return this.input.indexOf('\n');
 		}
 
 		private int sumRemainingInput() {
-			int sum = 0;
-			String[] numbersArray = this.input.split(this.separationRegex);
-
-			for (String number : numbersArray) {
-				sum = sum + parseNumber(number);
-			}
-
-			return sum;
+			int[] numbers = this.parseCurrentInput();
+			Invoker.assertNoNegatives(numbers);
+			return Invoker.sumNumbers(numbers);
 		}
 
-		private static int parseNumber(String number) {
-			int n = Integer.parseInt(number);
+		private int[] parseCurrentInput() {
+			String[] numbersArray = this.input.split(this.separationRegex);
+			int[] result = new int[numbersArray.length];
 
-			if (n >= 0) {
-				return n;
-			} else {
-				throw new NoNegatives(n);
+			for (int i = 0; i < numbersArray.length; i++) {
+				result[i] = Integer.parseInt(numbersArray[i]);
 			}
+
+			return result;
+		}
+
+		private static void assertNoNegatives(int[] numbers) {
+			String joinedNegatives = Arrays.stream(numbers).filter(n -> n < 0).mapToObj(Integer::toString)
+					.collect(Collectors.joining(","));
+
+			if (!joinedNegatives.isEmpty()) {
+				throw new NoNegatives(joinedNegatives);
+			}
+		}
+
+		private static int sumNumbers(int[] numbers) {
+			return Arrays.stream(numbers).sum();
 		}
 
 		private void setSeparationPattern(String separationPattern) {
@@ -74,13 +90,14 @@ public class StringCalculator {
 
 	}
 
-	@SuppressWarnings("serial")
 	public static class NoNegatives extends RuntimeException {
 
-		public NoNegatives(int number) {
-			super("no negatives allowed: " + number);
+		private static final long serialVersionUID = -51367231639435453L;
+
+		public NoNegatives(String numbers) {
+			super("no negatives allowed: " + numbers);
 		}
-		
+
 	}
 
 }

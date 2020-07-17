@@ -13,40 +13,53 @@ public class StringCalculatorTest {
 	public void setup() {
 		this.calculator = new StringCalculator();
 	}
+	
+	private void assertCalculatorAdd(String input, int expected) {
+		assertEquals(expected, this.calculator.add(input));
+	}
 
-	@Test
-	public void add_emptyString() throws Exception {
-		assertEquals(0, this.calculator.add(""));
+	private void assertNoNegativesMessage(String input, String negatives) {
+		try {
+			this.calculator.add(input);
+		} catch (StringCalculator.NoNegatives exception) {
+			assertEquals("no negatives allowed: " + negatives, exception.getMessage());
+		}
 	}
 
 	@Test
+	public void add_emptyString() throws Exception {
+		assertCalculatorAdd("", 0);
+	}
+
+
+	@Test
 	public void add_oneDigit() throws Exception {
-		assertEquals(1, this.calculator.add("1"));
+		assertCalculatorAdd("1", 1);
 	}
 
 	@Test
 	public void add_twoNumbers() throws Exception {
-		assertEquals(3, this.calculator.add("1,2"));
+		assertCalculatorAdd("1,2", 3);
 	}
 
 	@Test
 	public void add_fourNumbers() throws Exception {
-		assertEquals(18, this.calculator.add("1,2,5,10"));
+		assertCalculatorAdd("1,2,5,10", 18);
 	}
 
 	@Test
 	public void add_newLineAsSeparator() throws Exception {
-		assertEquals(7, this.calculator.add("4\n3"));
+		assertCalculatorAdd("4\n3", 7);
 	}
 
 	@Test
 	public void add_multipleSeparators() throws Exception {
-		assertEquals(21, this.calculator.add("4\n3,6\n8"));
+		assertCalculatorAdd("4\n3,6\n8", 21);
 	}
 
 	@Test
 	public void add_customSeparator() throws Exception {
-		assertEquals(3, this.calculator.add("//;\n1;2"));
+		assertCalculatorAdd("//;\n1;2", 3);
 	}
 
 	@Test(expected = StringCalculator.NoNegatives.class)
@@ -56,22 +69,12 @@ public class StringCalculatorTest {
 
 	@Test
 	public void add_noNegativesAllowedMessage() throws Exception {
-		int number = -2;
-		
-		try {
-			this.calculator.add(Integer.toString(number));
-		} catch (StringCalculator.NoNegatives exception) {
-			assertEquals("no negatives allowed: " + number, exception.getMessage());
-		}
+		assertNoNegativesMessage("-2", "-2");
 	}
 
 	@Test
 	public void add_multipleNegativesMessage() throws Exception {
-		try {
-			this.calculator.add("-4,5,-7");
-		} catch (StringCalculator.NoNegatives exception) {
-			assertEquals("no negatives allowed: -4,-7", exception.getMessage());
-		}
+		assertNoNegativesMessage("-4,5,-7", "-4,-7");
 	}
 
 }
