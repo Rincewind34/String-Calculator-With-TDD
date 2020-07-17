@@ -8,6 +8,7 @@ public class StringCalculator {
 
 	public static final String DEFAULT_SEPARATOR = ",";
 	public static final String CUSTOM_SEPARATOR_INDICATION = "//";
+	public static final int MAXIMAL_NUMBER_COUNTED = 1000;
 
 	private int timesCalled;
 
@@ -21,8 +22,6 @@ public class StringCalculator {
 	}
 
 	private static class Invoker {
-
-		private static final int MAXIMAL_NUMBER_COUNTED = 1000;
 
 		private String separationRegex;
 
@@ -45,15 +44,15 @@ public class StringCalculator {
 
 		private void readAndStripSeparator() {
 			if (this.input.startsWith(StringCalculator.CUSTOM_SEPARATOR_INDICATION)) {
-				this.parseSeparationPattern(this.readCustomSeparator());
+				this.parseSeparationPattern(this.readCustomSeparatorPattern());
 				this.stripCustomSeparatorSection();
 			}
 		}
 
-		private String readCustomSeparator() {
+		private String readCustomSeparatorPattern() {
 			String separatorSection = this.input.substring(0, this.findEndOfSeparatorSection());
-			String separator = separatorSection.substring(StringCalculator.CUSTOM_SEPARATOR_INDICATION.length());
-			return separator;
+			String separatorPattern = separatorSection.substring(StringCalculator.CUSTOM_SEPARATOR_INDICATION.length());
+			return separatorPattern;
 		}
 
 		private void stripCustomSeparatorSection() {
@@ -91,7 +90,7 @@ public class StringCalculator {
 		}
 
 		private static int sumNumbers(int[] numbers) {
-			return Arrays.stream(numbers).filter(n -> n <= Invoker.MAXIMAL_NUMBER_COUNTED).sum();
+			return Arrays.stream(numbers).filter(n -> n <= StringCalculator.MAXIMAL_NUMBER_COUNTED).sum();
 		}
 
 		private void parseSeparationPattern(String separationPattern) {
@@ -100,29 +99,27 @@ public class StringCalculator {
 			} else if (!separationPattern.startsWith("[")) {
 				throw new InvalidSingleCharSeparator();
 			} else {
-				parseBracketedSeparator(separationPattern);
+				this.parseBracketedSeparator(separationPattern);
 			}
 		}
 
 		private void parseBracketedSeparator(String separationPattern) {
-			separationPattern = Invoker.stripSeparatorBrackets(separationPattern);
+			separationPattern = Invoker.stripFirstAndLastSeparatorBrackets(separationPattern);
+			String[] separators = separationPattern.split(Pattern.quote("]["));
 
-			if (separationPattern.isEmpty()) {
+			if (separators[0].isEmpty()) {
 				throw new InvalidSingleCharSeparator();
 			}
 
-			this.setSeparationString(separationPattern);
+			this.setSeparationString(separators);
 		}
 
-		private void setSeparationString(String separationPattern) {
-			this.separationRegex = Pattern.quote(separationPattern) + "|\n";
+		private void setSeparationString(String... separationPattern) {
+			this.separationRegex = Arrays.stream(separationPattern).map(Pattern::quote).collect(Collectors.joining("|")) + "|\n";
 		}
 
-		private static String stripSeparatorBrackets(String separationPattern) {
-			if (separationPattern.startsWith("[")) {
-				separationPattern = separationPattern.substring(1, separationPattern.length() - 1);
-			}
-			return separationPattern;
+		private static String stripFirstAndLastSeparatorBrackets(String separationPattern) {
+			return separationPattern.substring(1, separationPattern.length() - 1);
 		}
 
 	}
