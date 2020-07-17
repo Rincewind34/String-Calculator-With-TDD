@@ -1,6 +1,7 @@
 package de.rincewind;
 
 import java.util.Arrays;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class StringCalculator {
@@ -94,7 +95,7 @@ public class StringCalculator {
 		}
 
 		private void setSeparationPattern(String separationPattern) {
-			this.separationRegex = separationPattern + "|\n";
+			this.separationRegex = Pattern.quote(separationPattern) + "|\n";
 		}
 
 	}

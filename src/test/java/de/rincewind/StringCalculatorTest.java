@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class StringCalculatorTest {
@@ -90,7 +89,6 @@ public class StringCalculatorTest {
 	}
 
 	@Test
-	@Ignore
 	public void add_customSeparatorMultipleChars() throws Exception {
 		assertCalculatorAdd("//***\n4***2***6\n4", 16);
 	}
