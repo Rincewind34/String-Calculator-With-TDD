@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class StringCalculatorTest {
@@ -81,6 +82,17 @@ public class StringCalculatorTest {
 	@Test
 	public void add_customSeparator() throws Exception {
 		assertCalculatorAdd("//;\n1;2", 3);
+	}
+	
+	@Test
+	public void add_customSeparatorWithRegexChar() throws Exception {
+		assertCalculatorAdd("//+\n6+7", 13);
+	}
+
+	@Test
+	@Ignore
+	public void add_customSeparatorMultipleChars() throws Exception {
+		assertCalculatorAdd("//***\n4***2***6\n4", 16);
 	}
 
 	@Test(expected = StringCalculator.NoNegatives.class)
