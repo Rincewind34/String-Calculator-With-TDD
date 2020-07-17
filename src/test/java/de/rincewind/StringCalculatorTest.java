@@ -100,7 +100,12 @@ public class StringCalculatorTest {
 
 	@Test
 	public void add_ignoreOver1000() throws Exception {
-		assertCalculatorAdd("1000", 0);
+		assertCalculatorAdd("1001", 0);
+	}
+
+	@Test
+	public void add_ignoreOver1000WithOtherNumberss() throws Exception {
+		assertCalculatorAdd("1001,9,1070,0,1000", 1009);
 	}
 
 }

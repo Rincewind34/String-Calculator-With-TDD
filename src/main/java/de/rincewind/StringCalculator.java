@@ -9,17 +9,19 @@ public class StringCalculator {
 	public static final String CUSTOM_SEPARATOR_INDICATION = "//";
 
 	private int timesCalled;
-	
+
 	public int add(String input) {
 		this.timesCalled++;
 		return new Invoker(input).calculate();
 	}
-	
+
 	public int getCalledCount() {
 		return this.timesCalled;
 	}
 
 	private static class Invoker {
+
+		private static final int MAXIMAL_NUMBER_COUNTED = 1000;
 
 		private String separationRegex;
 
@@ -88,7 +90,7 @@ public class StringCalculator {
 		}
 
 		private static int sumNumbers(int[] numbers) {
-			return Arrays.stream(numbers).sum();
+			return Arrays.stream(numbers).filter(n -> n <= Invoker.MAXIMAL_NUMBER_COUNTED).sum();
 		}
 
 		private void setSeparationPattern(String separationPattern) {
